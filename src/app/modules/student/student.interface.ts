@@ -27,7 +27,7 @@ export type Student = {
     name:UserName;
     gender:'male' | "female"; //union type literal
     email:string;
-    dateOfBirth:string;
+    dateOfBirth?:string;
     avatar?:string;
     contactNo:string;
     emergencyContactNo:string;
