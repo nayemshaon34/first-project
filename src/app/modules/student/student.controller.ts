@@ -23,6 +23,22 @@ const result = await StudentServices.createStudentIntoDB(studentData)
 }
 };
 
+
+const getAllStudentFromService = async(req:Request,res:Response)=>{
+    try {
+        const result = await StudentServices.getAllStudentsFromDB();
+        res.status(200).json({
+            sucess:true,
+            message:"students are retrieved successfully",
+            data:result,
+        })
+    } catch (error) {
+        console.log(error);
+        
+    }
+}
+
 export const StudentControllers = {
     createStudent,
+    getAllStudentFromService
 }
