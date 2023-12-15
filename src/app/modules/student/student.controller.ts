@@ -24,12 +24,28 @@ const result = await StudentServices.createStudentIntoDB(studentData)
 };
 
 
-const getAllStudentFromService = async(req:Request,res:Response)=>{
+const getAllStudentFromService = async (req:Request,res:Response)=>{
     try {
         const result = await StudentServices.getAllStudentsFromDB();
         res.status(200).json({
             sucess:true,
             message:"students are retrieved successfully",
+            data:result,
+        })
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+const getSingleFromService = async (req:Request,res:Response)=>{
+    try {
+        const { studentID } = req.params;
+        // const studentID = req.params.StudentId; //route e j name thakbe oitai dite hobe .params. er por
+        const result = await StudentServices.getSingleStudentFromDB(studentID);
+        
+        res.status(200).json({
+            success:true,
+            message:"a single student is retreived successfully",
             data:result,
         })
     } catch (error) {
@@ -40,5 +56,6 @@ const getAllStudentFromService = async(req:Request,res:Response)=>{
 
 export const StudentControllers = {
     createStudent,
-    getAllStudentFromService
+    getAllStudentFromService,
+    getSingleFromService,
 }
