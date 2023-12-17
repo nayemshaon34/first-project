@@ -46,7 +46,7 @@ const studentJoiValidationSchema = Joi.object({
         'A', 'B', 'AB', 'O', 'A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'
     ).required(),
     presentAddress: Joi.string().required(),
-    permanentAddress: Joi.string().required(),
+    permanantAddress: Joi.string().required(),
     guardian: guardianJoiValidtaionSchema.required(),
     localGuardian: localGuardianValidationJoiSchema.required(),
     profileImg: Joi.string(),
