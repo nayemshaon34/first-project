@@ -10,9 +10,10 @@ try {
     // const student = req.body.student;
 const {student:studentData/*name elias*/} = req.body;
 
-const {error} = studentJoiValidationSchema.validate(studentData);
+//data validation using joi
+const {error,value} = studentJoiValidationSchema.validate(studentData);
     
-const result = await StudentServices.createStudentIntoDB(studentData);
+const result = await StudentServices.createStudentIntoDB(value);
 
 if(error){
     res.status(500).json({
@@ -50,7 +51,7 @@ const getAllStudentFromService = async (req:Request,res:Response)=>{
             data:result,
         })
     } catch (error) {
-        console.log(error);
+        // console.log(error);
     }
 };
 
