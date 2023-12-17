@@ -1,6 +1,6 @@
 import { Schema, model } from "mongoose";
 import { Guardian, LocalGuardian, Student, UserName } from "./student.interface";
-
+import validator from "validator";
 
 // 2. Create a Schema corresponding to the document interface.
 const userNameSchema = new Schema<UserName>({
@@ -24,6 +24,10 @@ const userNameSchema = new Schema<UserName>({
     lastName:{
         type:String,
         required: [true, 'Last name is required.'],
+        validate:{
+            validator : (value:string)=> validator.isAlpha(value),
+            message:"{VALUE} is not valid",
+        }
     },
 });
 
@@ -58,7 +62,14 @@ const studentSchema = new Schema<Student>({
         required: [true, 'Gender is required.'],
     }, // predifned value thakle enum use korbo
     dateOfBirth:{type:String},
-    email: { type: String, required: [true, 'Email must be provided.'] },    contactNo:{type:String,required:true},
+    email: { type: String,
+            required: [true, 'Email must be provided.'], 
+            validate: {
+                validator: (value:string) => validator.isEmail(value),
+                message:'{VALUE} is not valid',
+            }
+        },
+    contactNo:{type:String,required:true},
     emergencyContactNo: { type: String, required: [true, 'Emergency contact number must be provided.'] },
     blood_group:{
         type:String,
