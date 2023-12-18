@@ -1,6 +1,9 @@
 import { Request, Response } from "express";
 import { StudentServices } from "./student.service";
-import studentJoiValidationSchema from "./student.JoiValidation";
+import zodStudentValidationSchema from "./student.ZodValidator";
+// import studentJoiValidationSchema from "./student.JoiValidation";
+// import {z} from "zod";
+
 
 
 const createStudent = async (req:Request,res:Response)=>{
@@ -11,23 +14,38 @@ try {
 const {student:studentData/*name elias*/} = req.body;
 
 //data validation using joi
-const {error,value} = studentJoiValidationSchema.validate(studentData);
+// const {error,value} = studentJoiValidationSchema.validate(studentData);
     
-const result = await StudentServices.createStudentIntoDB(value);
+// const result = await StudentServices.createStudentIntoDB(studentData);
 
-if(error){
-    res.status(500).json({
-        success:false,
-        message:"Something is wrong",
-        error,
-    })
-};
+// if(error){
+//     res.status(500).json({
+//         success:false,
+//         message:"Something is wrong",
+//         error,
+//     })
+// };
 //will call service function to send this data
 
 
+//data validation using zod
+// const zodStudentSchema = z.object({
+//     id:z.string(),
+//     name:z.object({
+//         firstName:z.string().max(20,{message:"must be less than 20"}),
+//         lastName:z.string(),
+//         middleName:z.string(),
+//     })
+// });
+
  //send response
 
- res.status(200).json({
+//  data validation using zod
+
+    const zodParseData = zodStudentValidationSchema.parse(studentData);
+
+    const result = await StudentServices.createStudentIntoDB(zodParseData);
+    res.status(200).json({
     success:true,
     message:"student is created succesfully",
     data:result
@@ -50,8 +68,13 @@ const getAllStudentFromService = async (req:Request,res:Response)=>{
             message:"students are retrieved successfully",
             data:result,
         })
-    } catch (error) {
+    } catch (err:any) {
         // console.log(error);
+        res.status(500).json({
+            success:false,
+            message:"something went wrong" || err.message,
+            error:err,
+            });
     }
 };
 
@@ -66,10 +89,10 @@ const getSingleFromService = async (req:Request,res:Response)=>{
             message:"a single student is retreived successfully",
             data:result,
         })
-    } catch (error) {
+    } catch (error:any) {
         res.status(500).json({
         success:false,
-        message:"something went wrong",
+        message:"something went wrong" || error.message,
         error:error,
         });
         

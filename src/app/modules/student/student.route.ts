@@ -8,5 +8,5 @@ const router = express.Router();
 router.post('/create-student',StudentControllers.createStudent);
 router.get('/',StudentControllers.getAllStudentFromService);
 router.get('/:studentId',StudentControllers.getSingleFromService); /*  /:StudentiId j name dibo oitai controller e use korte hobe   */
-
+router.get('/:studentId',StudentControllers.getSingleFromService);
 export const studentRoutes = router;
