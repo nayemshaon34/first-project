@@ -125,5 +125,5 @@ export const StudentControllers = {
     createStudent,
     getAllStudentFromService,
     getSingleFromService,
-    deleteStudent
+    deleteStudent,
 }
