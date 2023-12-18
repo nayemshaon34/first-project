@@ -108,7 +108,7 @@ const deleteStudent = async (req:Request,res:Response)=>{
         
         res.status(200).json({
             success:true,
-            message:"a single student is retreived successfully",
+            message:"a single student is deleted successfully",
             data:result,
         })
     } catch (error:any) {
