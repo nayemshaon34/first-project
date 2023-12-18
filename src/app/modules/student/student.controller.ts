@@ -97,10 +97,33 @@ const getSingleFromService = async (req:Request,res:Response)=>{
         });
         
     }
+};
+
+
+const deleteStudent = async (req:Request,res:Response)=>{
+    try {
+        const { studentID } = req.params;
+        // const studentID = req.params.StudentId; //route e j name thakbe oitai dite hobe .params. er por
+        const result = await StudentServices.deleteSingleStudentFromDB(studentID);
+        
+        res.status(200).json({
+            success:true,
+            message:"a single student is retreived successfully",
+            data:result,
+        })
+    } catch (error:any) {
+        res.status(500).json({
+        success:false,
+        message:"something went wrong" || error.message,
+        error:error,
+        });
+        
+    }
 }
 
 export const StudentControllers = {
     createStudent,
     getAllStudentFromService,
     getSingleFromService,
+    deleteStudent
 }
